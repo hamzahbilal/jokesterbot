@@ -1,0 +1,73 @@
+Metadata-Version: 2.0
+Name: background
+Version: 0.1.1
+Summary: It does what it says it does.
+Home-page: https://github.com/kennethreitz/background
+Author: Kenneth Reitz
+Author-email: me@kennethreitz.org
+License: ISC
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Dist: futures
+
+
+background: does what it says it does
+=====================================
+
+This module makes it stupidly simple to run things in the background of your
+application, be it a CLI app, or a web app.
+
+
+Basic Usage
+-----------
+
+::
+
+    import time
+
+    import background
+
+    @background.task
+    def work():
+        # Do something expensive here.
+        time.sleep(10)
+
+
+    for _ in range(100):
+        work()
+
+
+Advanced Usage
+--------------
+
+::
+
+    import background
+
+    # Use 40 background threads.
+    background.n = 40
+
+
+    @background.task
+    def work():
+        import time
+        time.sleep(10)
+
+    @background.callback
+    def work_callback(future):
+        print(future)
+
+
+    for _ in range(100):
+        work()
+
+
