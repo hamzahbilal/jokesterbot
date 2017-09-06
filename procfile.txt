@@ -1,1 +1,1 @@
-bot: python jokester.py
+bot: python joksterbot.py
