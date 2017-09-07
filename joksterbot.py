@@ -8,8 +8,8 @@ from random import randint
 #BOT_ID = os.environ.get("BOT_ID")
 
 # constants
-SLACK_BOT_TOKEN = xoxb-236970666659-qTztKUwzr8ojEXcZUFG5FjQ0
-BOT_ID = U6YUJKLKD
+SLACK_BOT_TOKEN = "xoxb-236970666659-qTztKUwzr8ojEXcZUFG5FjQ0"
+BOT_ID = "U6YUJKLKD"
 
 # AT_BOT = "<@" + BOT_ID + ">"
 # EXAMPLE_COMMAND = "do"
