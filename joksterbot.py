@@ -5,15 +5,17 @@ import praw
 from random import randint
 
 # starterbot's ID as an environment variable
-BOT_ID = os.environ.get("BOT_ID")
+#BOT_ID = os.environ.get("BOT_ID")
 
 # constants
+SLACK_BOT_TOKEN = xoxb-236970666659-qTztKUwzr8ojEXcZUFG5FjQ0
+BOT_ID = U6YUJKLKD
+
 # AT_BOT = "<@" + BOT_ID + ">"
 # EXAMPLE_COMMAND = "do"
 
 # instantiate Slack & Twilio clients
-slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
-
+slack_client = SlackClient(SLACK_BOT_TOKEN)
 
 def handle_command(command, channel, userid):
     
