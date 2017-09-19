@@ -6,7 +6,7 @@ from random import randint
 
 
 # constants
-SLACK_BOT_TOKEN = "xoxb-236970666659-qTztKUwzr8ojEXcZUFG5FjQ0"
+SLACK_BOT_TOKEN = "xoxb-236970666659-PRJepM8QX64rqbHKJYSUMIxW"
 BOT_ID = "U6YUJKLKD"
 
 # instantiate Slack & Twilio clients
