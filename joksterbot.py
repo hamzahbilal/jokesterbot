@@ -3,11 +3,12 @@ import time
 from slackclient import SlackClient
 import praw
 from random import randint
+import token
 
 
 # constants
-SLACK_BOT_TOKEN = "xoxb-236970666659-PRJepM8QX64rqbHKJYSUMIxW"
-BOT_ID = "U6YUJKLKD"
+SLACK_BOT_TOKEN = token.token
+BOT_ID = token.BOT_ID
 
 # instantiate Slack & Twilio clients
 slack_client = SlackClient(SLACK_BOT_TOKEN)
