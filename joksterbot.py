@@ -70,26 +70,28 @@ def parse_slack_output(slack_rtm_output):
     output_list = slack_rtm_output
     if output_list and len(output_list) > 0:
         for output in output_list:
-            if output and 'text' in output and 'joke' in output['text'].lower() and 'dark' in output['text'].lower() and BOT_ID not in output['user']:
-                return output['text'].strip().lower(), \
-                       output['channel'], \
-                       output['user'], \
-                       "dark"
-            elif output and 'text' in output and 'jokes' in output['text'].lower() and 'dark' in output['text'].lower() and BOT_ID not in output['user']:
-                return output['text'].strip().lower(), \
-                       output['channel'], \
-                       output['user'], \
-                       "dark"
-            elif output and 'text' in output and 'joke' in output['text'].lower() and BOT_ID not in output['user']:
-                return output['text'].strip().lower(), \
-                       output['channel'], \
-                       output['user'], \
-                       "clean"
-            elif output and 'text' in output and 'jokes' in output['text'].lower() and BOT_ID not in output['user']:
-                return output['text'].strip().lower(), \
-                       output['channel'], \
-                       output['user'], \
-                       "clean"
+            if output and 'text' in output and BOT_ID not in output['user']:
+                if 'joke' or 'jokes' in output['text'].lower():
+                    if 'dark' or 'black' or 'racist' or 'bad' in output['text'].lower():
+                        return output['text'].strip().lower(), \
+                               output['channel'], \
+                               output['user'], \
+                               "dark"
+                    else:
+                        return output['text'].strip().lower(), \
+                               output['channel'], \
+                               output['user'], \
+                               "clean"
+            # elif output and 'text' in output and 'joke' in output['text'].lower() and BOT_ID not in output['user']:
+            #     return output['text'].strip().lower(), \
+            #            output['channel'], \
+            #            output['user'], \
+            #            "clean"
+            # elif output and 'text' in output and 'jokes' in output['text'].lower() and BOT_ID not in output['user']:
+            #     return output['text'].strip().lower(), \
+            #            output['channel'], \
+            #            output['user'], \
+            #            "clean"
     return None, None, None, None
 
 
