@@ -73,11 +73,15 @@ def parse_slack_output(slack_rtm_output):
             if output and 'text' in output and BOT_ID not in output['user']:
                 if 'joke' in output['text'].lower():
                     #if 'dark' or 'black' or 'racist' or 'bad' in output['text'].lower():
-                    if 'dark' in output['text'].lower():
-                        return output['text'].strip().lower(), \
-                               output['channel'], \
-                               output['user'], \
-                               "dark"
+                    if 'dark' in output['text'].lower() \
+                        or 'racist' in output['text'].lower() \
+                        or 'sexist' in output['text'].lower() \
+                        or 'black' in output['text'].lower() \
+                        or 'bad' in output['text'].lower():
+                            return output['text'].strip().lower(), \
+                                   output['channel'], \
+                                   output['user'], \
+                                   "dark"
                     else:
                         return output['text'].strip().lower(), \
                                output['channel'], \
