@@ -13,28 +13,53 @@ BOT_ID = mystuff.BOT_ID
 # instantiate Slack & Twilio clients
 slack_client = SlackClient(SLACK_BOT_TOKEN)
 
-def handle_command(command, channel, userid):
+def handle_command(command, channel, userid, joke_type):
     response = 'dummy'
-    slack_client.api_call("chat.postMessage", channel=channel, text="someone want's a joke?!", as_user=True)
+    # add different response openers!!
+    if joke_type = "dark":
+        slack_client.api_call("chat.postMessage", channel=channel, text="you asked for it!", as_user=True)
 
-    """
-    	Get a joke from reddit
-    """
-    reddit = praw.Reddit('test_bot')
-    subreddit = reddit.subreddit("cleanjokes")
-    for submission in subreddit.hot(limit=randint(1,50)):
-        # print(submission.title.lower())
-        # print(submission.selftext.lower())
-        # if 'reddit' or 'AMA' or 'IAMA' or 'subreddit' or 'sub' or 'edit' in submission.title.lower():
-        #     print "Here!"
-        #     continue
-        # elif 'reddit' or 'AMA' or 'IAMA' or 'subreddit' or 'sub' or 'edit' in submission.selftext.lower():
-        #     print "Here!"
-        #     continue
-        response = submission.title + "\n" + submission.selftext
-    time.sleep(2)
-    slack_client.api_call("chat.postMessage", channel=channel,
-                          text=response, as_user=True)
+        """
+            Get a joke from reddit
+        """
+        reddit = praw.Reddit('test_bot')
+        subreddit = reddit.subreddit("darkjokes")
+        for submission in subreddit.top(limit=randint(1,50)):
+            # print(submission.title.lower())
+            # print(submission.selftext.lower())
+            # if 'reddit' or 'AMA' or 'IAMA' or 'subreddit' or 'sub' or 'edit' in submission.title.lower():
+            #     print "Here!"
+            #     continue
+            # elif 'reddit' or 'AMA' or 'IAMA' or 'subreddit' or 'sub' or 'edit' in submission.selftext.lower():
+            #     print "Here!"
+            #     continue
+            response = submission.title + "\n" + submission.selftext
+        time.sleep(2)
+        slack_client.api_call("chat.postMessage", channel=channel,
+                              text=response, as_user=True)
+
+
+    else:
+        slack_client.api_call("chat.postMessage", channel=channel, text="joke time!", as_user=True)
+
+        """
+        	Get a joke from reddit
+        """
+        reddit = praw.Reddit('test_bot')
+        subreddit = reddit.subreddit("cleanjokes")
+        for submission in subreddit.hot(limit=randint(1,50)):
+            # print(submission.title.lower())
+            # print(submission.selftext.lower())
+            # if 'reddit' or 'AMA' or 'IAMA' or 'subreddit' or 'sub' or 'edit' in submission.title.lower():
+            #     print "Here!"
+            #     continue
+            # elif 'reddit' or 'AMA' or 'IAMA' or 'subreddit' or 'sub' or 'edit' in submission.selftext.lower():
+            #     print "Here!"
+            #     continue
+            response = submission.title + "\n" + submission.selftext
+        time.sleep(2)
+        slack_client.api_call("chat.postMessage", channel=channel,
+                              text=response, as_user=True)
 
 def parse_slack_output(slack_rtm_output):
     """
@@ -45,15 +70,27 @@ def parse_slack_output(slack_rtm_output):
     output_list = slack_rtm_output
     if output_list and len(output_list) > 0:
         for output in output_list:
-            if output and 'text' in output and 'joke' in output['text'].lower() and BOT_ID not in output['user']:
+            if output and 'text' in output and 'joke' in output['text'].lower() and 'dark' in output['text'].lower() and BOT_ID not in output['user']:
                 return output['text'].strip().lower(), \
                        output['channel'], \
-                       output['user']
+                       output['user'], \
+                       "dark"
+            elif output and 'text' in output and 'jokes' in output['text'].lower() and 'dark' in output['text'].lower() and BOT_ID not in output['user']:
+                return output['text'].strip().lower(), \
+                       output['channel'], \
+                       output['user'], \
+                       "dark"
+            elif output and 'text' in output and 'joke' in output['text'].lower() and BOT_ID not in output['user']:
+                return output['text'].strip().lower(), \
+                       output['channel'], \
+                       output['user'], \
+                       "clean"
             elif output and 'text' in output and 'jokes' in output['text'].lower() and BOT_ID not in output['user']:
                 return output['text'].strip().lower(), \
                        output['channel'], \
-                       output['user']
-    return None, None, None
+                       output['user'], \
+                       "clean"
+    return None, None, None, None
 
 
 if __name__ == "__main__":
@@ -61,9 +98,9 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
         print("StarterBot connected and running!")
         while True:
-            command, channel, userid = parse_slack_output(slack_client.rtm_read())
+            command, channel, userid, joke_type = parse_slack_output(slack_client.rtm_read())
             if command and channel:
-                handle_command(command, channel, userid)
+                handle_command(command, channel, userid, joke_type)
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
         print("Connection failed. Invalid Slack token or bot ID?")
