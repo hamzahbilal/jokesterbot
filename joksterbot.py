@@ -16,7 +16,7 @@ slack_client = SlackClient(SLACK_BOT_TOKEN)
 def handle_command(command, channel, userid, joke_type):
     response = 'dummy'
     # add different response openers!!
-    if joke_type = "dark":
+    if joke_type is "dark":
         slack_client.api_call("chat.postMessage", channel=channel, text="you asked for it!", as_user=True)
 
         """
