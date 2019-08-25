@@ -13,7 +13,7 @@ pipenv==5.3.5
 praw==5.1.0
 prawcore==0.12.0
 pythonz-bd==1.11.4
-requests==2.18.4
+requests==2.20.0
 semver==2.7.8
 shutilwhich==1.1.0
 six==1.10.0
